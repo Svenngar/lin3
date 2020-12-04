@@ -6,20 +6,18 @@
 ## Teste sur : debian 10
 ## Execute as root
 
-
-
 ## Installation de paquets aptitude et  NTP
 apt-get install aptitude -y
 aptitude install ntp -y
 
 ## Modification des serveurs de temps utilises
-sed -i 's/pool 0.debian.pool.ntp.org iburst/server 1.north-america.pool.ntp.org/g' /etc/ntp.conf
-sed -i 's/pool 1.debian.pool.ntp.org iburst/server 2.north-america.pool.ntp.org/g' /etc/ntp.conf
-sed -i 's/pool 2.debian.pool.ntp.org iburst/server 3.north-america.pool.ntp.org/g' /etc/ntp.conf
-sed -i 's/pool 3.debian.pool.ntp.org iburst/server 4.north-america.pool.ntp.org/g' /etc/ntp.conf
+sed -i "s/pool 0.debian.pool.ntp.org iburst/'server 1.north-america.pool.ntp.org'/g" /etc/ntp.conf
+sed -i "s/pool 1.debian.pool.ntp.org iburst/'server 2.north-america.pool.ntp.org'/g" /etc/ntp.conf
+sed -i "s/pool 2.debian.pool.ntp.org iburst/'server 3.north-america.pool.ntp.org'/g" /etc/ntp.conf
+sed -i "s/pool 3.debian.pool.ntp.org iburst/'server 4.north-america.pool.ntp.org'/g" /etc/ntp.conf
 
 ## Active l'enregistrement de statistiques ntp
-sed -i 's/#statsdir /var/log/ntpstats//statsdir /var/log/ntpstats//g' /etc/ntp.conf
+sed -i 's/#statsdir \/var\/log\/ntpstats\//statsdir \/var\/log\/ntpstats\//g' /etc/ntp.conf
 
 ## Active l'enregistrement de log
 echo "## Active l'enregistrement de log" > /etc/ntp.conf
