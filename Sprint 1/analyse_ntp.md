@@ -51,7 +51,7 @@ Chaque nœud de cette architecture doit être configuré en lui indiquant au min
 
 #### Source :
 
-{% embed url="http://www.ntp.org/ntpfaq/NTP-s-def.htm\#AEN1298" %}
+http://www.ntp.org/ntpfaq/NTP-s-def.htm\#AEN1298
 
 #### Comment les serveurs NTP se protègent d'éventuelles attaques
 
@@ -79,7 +79,7 @@ Un autre effet peut être simplement le refus de communication des machines entr
 
 #### Source :
 
-{% embed url="https://en.wikipedia.org/wiki/Network\_Time\_Protocol\#SNTP" %}
+https://en.wikipedia.org/wiki/Network\_Time\_Protocol\#SNTP
 
 ## Story 2
 
@@ -246,5 +246,3 @@ ufw allow ssh
 ufw allow proto udp from 10.229.32.0/20 to any port 123
 ufw --force enable
 ```
-
-{% embed url="https://Redhat.com" %}
