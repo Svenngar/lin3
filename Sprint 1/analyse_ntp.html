@@ -27,10 +27,10 @@
 <h3 id="instructions">Instructions</h3>
 <p><strong>Story 001 - Acquisition de comp&#xE9;tence th&#xE9;orique</strong> (Business Value : 3 / Dev effort : 2)**</p>
 <ul>
-<li><a href="https://fr.wikipedia.org/wiki/Network_Time_Protocol">Wikipedia</a></li>
-<li><a href="http://support.ntp.org/bin/view/Main/WebHome">NTP.orp</a></li>
-<li><a href="https://www.frameip.com/ntp/">Frameip.com</a></li>
-<li><a href="https://tf.nist.gov/tf-cgi/servers.cgi">Serveurs sources</a></li>
+<li><a href="https://fr.wikipedia.org/wiki/Network_Time_Protocol">Wikipedia</a>{target=&quot;_blank&quot;}</li>
+<li><a href="http://support.ntp.org/bin/view/Main/WebHome">NTP.orp</a>{target=&quot;_blank&quot;}</li>
+<li><a href="https://www.frameip.com/ntp/">Frameip.com</a>{target=&quot;_blank&quot;}</li>
+<li><a href="https://tf.nist.gov/tf-cgi/servers.cgi">Serveurs sources</a>{target=&quot;_blank&quot;}</li>
 </ul>
 <p>Voici les points qui doivent &#xEA;tre &#xE9;tudi&#xE9; (non exaustive):</p>
 <ul>
@@ -45,7 +45,7 @@
 <h4 id="quel-type-d-architecture-">Quel type d&apos;architecture ?</h4>
 <p>L&apos;architecture NTP pr&#xE9;voit</p>
 <ul>
-<li>la diffusion verticale arborescente de proche en proche d&apos;une heure de r&#xE9;f&#xE9;rence &#xE0; partir d&apos;une ou plusieurs machines racines garantes d&apos;une grande pr&#xE9;cision<a href="https://fr.wikipedia.org/wiki/Network_Time_Protocol#cite_note-4">4</a>. Dans cette arborescence, chaque n&#x153;ud choisit parmi ses n&#x153;uds parents, celui qui pr&#xE9;sente les meilleures garanties de qualit&#xE9; et h&#xE9;rite au passage d&apos;un attribut nomm&#xE9; stratum qu&apos;il transmet &#xE0; ses descendants. Les machines de stratum 1 sont les machines racines et &#xE0; chaque travers&#xE9;e d&apos;un n&#x153;ud ce nombre augmente d&apos;une unit&#xE9;. Ce stratum est une mesure de la distance d&apos;un n&#x153;ud aux machines racines, il est consid&#xE9;r&#xE9; comme un indicateur de la qualit&#xE9; de synchronisation qu&apos;une machine donn&#xE9;e peut offrir &#xE0; ses descendants.</li>
+<li>la diffusion verticale arborescente de proche en proche d&apos;une heure de r&#xE9;f&#xE9;rence &#xE0; partir d&apos;une ou plusieurs machines racines garantes d&apos;une grande pr&#xE9;cision<a href="https://fr.wikipedia.org/wiki/Network_Time_Protocol#cite_note-4">4</a>{target=&quot;_blank&quot;} . Dans cette arborescence, chaque n&#x153;ud choisit parmi ses n&#x153;uds parents, celui qui pr&#xE9;sente les meilleures garanties de qualit&#xE9; et h&#xE9;rite au passage d&apos;un attribut nomm&#xE9; stratum qu&apos;il transmet &#xE0; ses descendants. Les machines de stratum 1 sont les machines racines et &#xE0; chaque travers&#xE9;e d&apos;un n&#x153;ud ce nombre augmente d&apos;une unit&#xE9;. Ce stratum est une mesure de la distance d&apos;un n&#x153;ud aux machines racines, il est consid&#xE9;r&#xE9; comme un indicateur de la qualit&#xE9; de synchronisation qu&apos;une machine donn&#xE9;e peut offrir &#xE0; ses descendants.</li>
 <li>la diffusion lat&#xE9;rale &#xE0; des machines paires d&apos;une heure commune. Cette diffusion vient en compl&#xE9;ment de la pr&#xE9;c&#xE9;dente ; elle permet &#xE0; ces machines de partager une r&#xE9;f&#xE9;rence de temps qui leur est commune. Cette diffusion am&#xE9;liore la r&#xE9;silience de cette architecture NTP dans le sens o&#xF9; elle permet de suppl&#xE9;er une d&#xE9;ficience locale/temporaire de connectivit&#xE9; vers les machines racines, voire de permettre &#xE0; un groupe de machines de conserver entre elles une m&#xEA;me r&#xE9;f&#xE9;rence relative en l&apos;absence de machines racines.</li>
 </ul>
 <p>Dans la terminologie NTP, les serveurs de stratum 1 sont appel&#xE9;s serveurs primaires, et les autres sont appel&#xE9;s serveurs secondaires.</p>
@@ -63,7 +63,7 @@
 <li>For formal reasons NTP will also maintain estimates for the accuracy of the local time.</li>
 </ul>
 <h4 id="source-">Source :</h4>
-<p>*<a href="http://www.ntp.org/ntpfaq/NTP-s-def.htm#AEN1298">NTP en bref</a></p>
+<p><a href="http://www.ntp.org/ntpfaq/NTP-s-def.htm#AEN1298">NTP en bref</a>{target=&quot;_blank&quot;}</p>
 <h4 id="comment-les-serveurs-ntp-se-prot-gent-d-ventuelles-attaques">Comment les serveurs NTP se prot&#xE8;gent d&apos;&#xE9;ventuelles attaques</h4>
 <p>Les serveurs NTP se prot&#xE8;gent de diff&#xE9;rentes mani&#xE8;res contres les attaques.</p>
 <p>La majorit&#xE9; des serveurs NTP bloquent les IP des machines ex&#xE9;cutant trop de requ&#xEA;tes en peu de temps (voir Story2 &gt; Remarques &gt; Param&#xE8;tre iburst</p>
@@ -77,7 +77,7 @@
 <h4 id="sntp">SNTP</h4>
 <p> <strong>Simple Network Time Protocol</strong> (<strong>SNTP</strong>) is a less complex implementation of NTP, using the same protocol but without requiring the storage of state over extended periods of time. It is used in some embedded system and in applications where full NTP capability is not required.</p>
 <h4 id="source-">Source :</h4>
-<p>*<a href="https://en.wikipedia.org/wiki/Network_Time_Protocol#SNTP">NTP en plus simple</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Network_Time_Protocol#SNTP">NTP en plus simple</a>{target=&quot;_blank&quot;}</p>
 <h2 id="story-2">Story 2</h2>
 <h3 id="instructions">Instructions</h3>
 <p><strong>Story 002 - Mettre en place un lien avec une horloge atomique de notre choix (Business Value : 5 / Dev effort : 1)</strong></p>

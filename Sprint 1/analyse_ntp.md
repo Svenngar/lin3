@@ -8,10 +8,10 @@
 
 **Story 001 - Acquisition de compétence théorique** \(Business Value : 3 / Dev effort : 2\)\*\*
 
-* [Wikipedia](https://fr.wikipedia.org/wiki/Network_Time_Protocol)
-* [NTP.orp](http://support.ntp.org/bin/view/Main/WebHome)
-* [Frameip.com](https://www.frameip.com/ntp/)
-* [Serveurs sources](https://tf.nist.gov/tf-cgi/servers.cgi)
+* [Wikipedia](https://fr.wikipedia.org/wiki/Network_Time_Protocol){target="_blank"}
+* [NTP.orp](http://support.ntp.org/bin/view/Main/WebHome){target="_blank"}
+* [Frameip.com](https://www.frameip.com/ntp/){target="_blank"}
+* [Serveurs sources](https://tf.nist.gov/tf-cgi/servers.cgi){target="_blank"}
 
 Voici les points qui doivent être étudié \(non exaustive\):
 
@@ -28,7 +28,7 @@ Voici les points qui doivent être étudié \(non exaustive\):
 
 L'architecture NTP prévoit
 
-* la diffusion verticale arborescente de proche en proche d'une heure de référence à partir d'une ou plusieurs machines racines garantes d'une grande précision[4](https://fr.wikipedia.org/wiki/Network_Time_Protocol#cite_note-4). Dans cette arborescence, chaque nœud choisit parmi ses nœuds parents, celui qui présente les meilleures garanties de qualité et hérite au passage d'un attribut nommé stratum qu'il transmet à ses descendants. Les machines de stratum 1 sont les machines racines et à chaque traversée d'un nœud ce nombre augmente d'une unité. Ce stratum est une mesure de la distance d'un nœud aux machines racines, il est considéré comme un indicateur de la qualité de synchronisation qu'une machine donnée peut offrir à ses descendants.
+* la diffusion verticale arborescente de proche en proche d'une heure de référence à partir d'une ou plusieurs machines racines garantes d'une grande précision[4](https://fr.wikipedia.org/wiki/Network_Time_Protocol#cite_note-4){target="_blank"} . Dans cette arborescence, chaque nœud choisit parmi ses nœuds parents, celui qui présente les meilleures garanties de qualité et hérite au passage d'un attribut nommé stratum qu'il transmet à ses descendants. Les machines de stratum 1 sont les machines racines et à chaque traversée d'un nœud ce nombre augmente d'une unité. Ce stratum est une mesure de la distance d'un nœud aux machines racines, il est considéré comme un indicateur de la qualité de synchronisation qu'une machine donnée peut offrir à ses descendants.
 * la diffusion latérale à des machines paires d'une heure commune. Cette diffusion vient en complément de la précédente ; elle permet à ces machines de partager une référence de temps qui leur est commune. Cette diffusion améliore la résilience de cette architecture NTP dans le sens où elle permet de suppléer une déficience locale/temporaire de connectivité vers les machines racines, voire de permettre à un groupe de machines de conserver entre elles une même référence relative en l'absence de machines racines.
 
 Dans la terminologie NTP, les serveurs de stratum 1 sont appelés serveurs primaires, et les autres sont appelés serveurs secondaires.
@@ -51,7 +51,7 @@ Chaque nœud de cette architecture doit être configuré en lui indiquant au min
 
 #### Source :
 
-*[NTP en bref](http://www.ntp.org/ntpfaq/NTP-s-def.htm#AEN1298)
+[NTP en bref](http://www.ntp.org/ntpfaq/NTP-s-def.htm#AEN1298){target="_blank"}
 
 #### Comment les serveurs NTP se protègent d'éventuelles attaques
 
@@ -79,7 +79,7 @@ Un autre effet peut être simplement le refus de communication des machines entr
 
 #### Source :
 
-*[NTP en plus simple](https://en.wikipedia.org/wiki/Network_Time_Protocol#SNTP)
+[NTP en plus simple](https://en.wikipedia.org/wiki/Network_Time_Protocol#SNTP){target="_blank"}
 
 ## Story 2
 
