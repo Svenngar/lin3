@@ -51,7 +51,7 @@ Chaque nœud de cette architecture doit être configuré en lui indiquant au min
 
 #### Source :
 
-http://www.ntp.org/ntpfaq/NTP-s-def.htm\#AEN1298
+*[NTP en bref](http://www.ntp.org/ntpfaq/NTP-s-def.htm#AEN1298)
 
 #### Comment les serveurs NTP se protègent d'éventuelles attaques
 
@@ -79,7 +79,7 @@ Un autre effet peut être simplement le refus de communication des machines entr
 
 #### Source :
 
-https://en.wikipedia.org/wiki/Network\_Time\_Protocol\#SNTP
+*[NTP en plus simple](https://en.wikipedia.org/wiki/Network_Time_Protocol#SNTP)
 
 ## Story 2
 
