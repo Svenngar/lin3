@@ -21,13 +21,197 @@
   }
 </style>
 </head>
-<body><div id="readme" class="container"><article class="markdown-body entry-content"><h1 id="analyse-du-protocole-ntp">Analyse du protocole NTP</h1>
-<h2 id="objectif-du-ntp">Objectif du NTP</h2>
-<h2 id="architecture">Architecture</h2>
-<h2 id="composants-du-ntp">Composants du NTP</h2>
-<h2 id="ports-et-protocoles-utilis-s">Ports et protocoles utilis&#xE9;s</h2>
-<h2 id="s-curisation-du-ntp">S&#xE9;curisation du NTP</h2>
-<h2 id="le-sntp">Le SNTP</h2>
+<body><div id="readme" class="container"><article class="markdown-body entry-content"><h1 id="initial-page">Initial page</h1>
+<h2 id="sch-ma-de-l-infrastructure-virtuelle-locale">Sch&#xE9;ma de l&apos;infrastructure virtuelle locale</h2>
+<h2 id="story-1">Story 1</h2>
+<h3 id="instructions">Instructions</h3>
+<p><strong>Story 001 - Acquisition de comp&#xE9;tence th&#xE9;orique</strong> (Business Value : 3 / Dev effort : 2)**</p>
+<ul>
+<li><a href="https://fr.wikipedia.org/wiki/Network_Time_Protocol">Wikipedia</a></li>
+<li><a href="http://support.ntp.org/bin/view/Main/WebHome">NTP.orp</a></li>
+<li><a href="https://www.frameip.com/ntp/">Frameip.com</a></li>
+<li><a href="https://tf.nist.gov/tf-cgi/servers.cgi">Serveurs sources</a></li>
+</ul>
+<p>Voici les points qui doivent &#xEA;tre &#xE9;tudi&#xE9; (non exaustive):</p>
+<ul>
+<li>Quel type d&apos;architecture ?</li>
+<li>Quels sont les composants du NTP ?</li>
+<li>Comment les serveurs NTP se prot&#xE8;gent d&apos;&#xE9;ventuelles attaques ?</li>
+<li>Ports, protocoles utilis&#xE9;s</li>
+<li>Objectif du NTP</li>
+<li>SNTP ?</li>
+</ul>
+<h3 id="r-ponses">R&#xE9;ponses</h3>
+<h4 id="quel-type-d-architecture-">Quel type d&apos;architecture ?</h4>
+<p>L&apos;architecture NTP pr&#xE9;voit</p>
+<ul>
+<li>la diffusion verticale arborescente de proche en proche d&apos;une heure de r&#xE9;f&#xE9;rence &#xE0; partir d&apos;une ou plusieurs machines racines garantes d&apos;une grande pr&#xE9;cision<a href="https://fr.wikipedia.org/wiki/Network_Time_Protocol#cite_note-4">4</a>. Dans cette arborescence, chaque n&#x153;ud choisit parmi ses n&#x153;uds parents, celui qui pr&#xE9;sente les meilleures garanties de qualit&#xE9; et h&#xE9;rite au passage d&apos;un attribut nomm&#xE9; stratum qu&apos;il transmet &#xE0; ses descendants. Les machines de stratum 1 sont les machines racines et &#xE0; chaque travers&#xE9;e d&apos;un n&#x153;ud ce nombre augmente d&apos;une unit&#xE9;. Ce stratum est une mesure de la distance d&apos;un n&#x153;ud aux machines racines, il est consid&#xE9;r&#xE9; comme un indicateur de la qualit&#xE9; de synchronisation qu&apos;une machine donn&#xE9;e peut offrir &#xE0; ses descendants.</li>
+<li>la diffusion lat&#xE9;rale &#xE0; des machines paires d&apos;une heure commune. Cette diffusion vient en compl&#xE9;ment de la pr&#xE9;c&#xE9;dente ; elle permet &#xE0; ces machines de partager une r&#xE9;f&#xE9;rence de temps qui leur est commune. Cette diffusion am&#xE9;liore la r&#xE9;silience de cette architecture NTP dans le sens o&#xF9; elle permet de suppl&#xE9;er une d&#xE9;ficience locale/temporaire de connectivit&#xE9; vers les machines racines, voire de permettre &#xE0; un groupe de machines de conserver entre elles une m&#xEA;me r&#xE9;f&#xE9;rence relative en l&apos;absence de machines racines.</li>
+</ul>
+<p>Dans la terminologie NTP, les serveurs de stratum 1 sont appel&#xE9;s serveurs primaires, et les autres sont appel&#xE9;s serveurs secondaires.</p>
+<p>Chaque n&#x153;ud de cette architecture doit &#xEA;tre configur&#xE9; en lui indiquant au minimum quels sont ses serveurs parents et/ou collat&#xE9;raux. C&apos;est &#xE0; la charge de chaque utilisateur de r&#xE9;aliser localement cette configuration. C&apos;est cette agr&#xE9;gation de configurations qui, de proche en proche, cr&#xE9;e le r&#xE9;seau NTP, il n&apos;est pas pr&#xE9;existant ni m&#xEA;me configur&#xE9; de fa&#xE7;on centralis&#xE9;e. Cette architecture est flexible extensible et robuste, mais c&#x2019;est &#xE0; la charge des utilisateurs d&#x2019;y contribuer.</p>
+<h4 id="quels-sont-les-composants-du-ntp-">Quels sont les composants du NTP ?</h4>
+<ul>
+<li><p>NTP needs some reference clock that defines the true time to operate. All clocks are set towards that true time. (It will not just make all systems agree on some time, but will make them agree upon the true time as defined by some standard.)</p>
+<p>NTP uses UTC as reference time.</p>
+</li>
+<li><p>NTP is a fault-tolerant protocol that will automatically select the best of several available time sources to synchronize to. Multiple candidates can be combined to minimize the accumulated error. Temporarily or permanently insane time sources will be detected and avoided.</p>
+</li>
+<li>NTP is highly scalable: A synchronization network may consist of several reference clocks. Each node of such a network can exchange time information either bidirectional or unidirectional. Propagating time from one node to another forms a hierarchical graph with reference clocks at the top.</li>
+<li>Having available several time sources, NTP can select the best candidates to build its estimate of the current time. The protocol is highly accurate, using a resolution of less than a nanosecond (about 2^-32 seconds). (The popular protocol used by <strong>rdate</strong> and defined in [RFC 868] only uses a resolution of one second).</li>
+<li>Even when a network connection is temporarily unavailable, NTP can use measurements from the past to estimate current time and error.</li>
+<li>For formal reasons NTP will also maintain estimates for the accuracy of the local time.</li>
+</ul>
+<h4 id="source-">Source :</h4>
+<p>{% embed url=&quot;<a href="http://www.ntp.org/ntpfaq/NTP-s-def.htm%5C#AEN1298&quot;">http://www.ntp.org/ntpfaq/NTP-s-def.htm\#AEN1298&quot;</a> %}</p>
+<h4 id="comment-les-serveurs-ntp-se-prot-gent-d-ventuelles-attaques">Comment les serveurs NTP se prot&#xE8;gent d&apos;&#xE9;ventuelles attaques</h4>
+<p>Les serveurs NTP se prot&#xE8;gent de diff&#xE9;rentes mani&#xE8;res contres les attaques.</p>
+<p>La majorit&#xE9; des serveurs NTP bloquent les IP des machines ex&#xE9;cutant trop de requ&#xEA;tes en peu de temps (voir Story2 &gt; Remarques &gt; Param&#xE8;tre iburst</p>
+<h4 id="ports-protocoles-utilis-s">Ports, protocoles utilis&#xE9;s</h4>
+<p> NTP est un protocole bas&#xE9; sur UDP et utilise le port 123.</p>
+<h4 id="objectif-du-ntp">Objectif du NTP</h4>
+<p>It is an Internet protocol used to synchronize the clocks of computers to some time reference</p>
+<p>Time usually just advances. If you have communicating programs running on different computers, time still should even advance if you switch from one computer to another. Obviously if one system is ahead of the others, the others are behind that particular one. From the perspective of an external observer, switching between these systems would cause time to jump forward and back, a non-desirable effect.</p>
+<p>L&apos;un des effets non d&#xE9;sir&#xE9;s d&apos;un d&#xE9;calage dans le temps entre deux machines, pourrait modifier la date de p&#xE9;remption d&apos;un certificat et donc les donn&#xE9;es ne seraient plus crypt&#xE9;es entre les deux machines, ce qui permettrait la lecture des donn&#xE9;es</p>
+<p>Un autre effet peut &#xEA;tre simplement le refus de communication des machines entre elles, ce qui aura pour cause d&apos;isoler la machine</p>
+<h4 id="sntp">SNTP</h4>
+<p> <strong>Simple Network Time Protocol</strong> (<strong>SNTP</strong>) is a less complex implementation of NTP, using the same protocol but without requiring the storage of state over extended periods of time. It is used in some embedded system and in applications where full NTP capability is not required.</p>
+<h4 id="source-">Source :</h4>
+<p>{% embed url=&quot;<a href="https://en.wikipedia.org/wiki/Network%5C_Time%5C_Protocol%5C#SNTP&quot;">https://en.wikipedia.org/wiki/Network\_Time\_Protocol\#SNTP&quot;</a> %}</p>
+<h2 id="story-2">Story 2</h2>
+<h3 id="instructions">Instructions</h3>
+<p><strong>Story 002 - Mettre en place un lien avec une horloge atomique de notre choix (Business Value : 5 / Dev effort : 1)</strong></p>
+<p>Description : L&apos;instance SSH synchronise son temps avec time-d-b.nist.gov (primaire) et utcnist2.colorado.edu (colorado)</p>
+<h4 id="given"><strong>given</strong></h4>
+<ul>
+<li>Je suis connect&#xE9; sur l&apos;instance SSH.</li>
+<li>Je modifie l&apos;heure syst&#xE8;me.</li>
+</ul>
+<h4 id="when"><strong>when</strong></h4>
+<ul>
+<li>Je lance (force) une synchronisation.</li>
+</ul>
+<h4 id="then"><strong>then</strong></h4>
+<ul>
+<li>Le log du ntp mentionne les interactions avec les horloges sources.</li>
+<li>Le temps est &#xE0; nouveau synchronis&#xE9;.</li>
+</ul>
+<h3 id="r-ponses">R&#xE9;ponses</h3>
+<pre><code class="language-text">#!/bin/bash
+## Titre : story2.sh
+## Description : Ce script installe et configure le client ntp de la machine courante et modifie le serveur ntp de reference vers un serveur aux us
+## Date : 27.11.2020
+## Auteurs : Chassot Richard, Karoui Mehdi, Angeloz Roderick
+## Teste sur : debian 10
+## Execute as root
+
+
+
+## Installation de paquets aptitude et  NTP
+apt-get install aptitude -y
+aptitude install ntp -y
+
+## Modification des serveurs de temps utilises
+sed -i &apos;s/pool 0.debian.pool.ntp.org iburst/server 1.north-america.pool.ntp.org/g&apos; /etc/ntp.conf
+sed -i &apos;s/pool 1.debian.pool.ntp.org iburst/server 2.north-america.pool.ntp.org/g&apos; /etc/ntp.conf
+sed -i &apos;s/pool 2.debian.pool.ntp.org iburst/server 3.north-america.pool.ntp.org/g&apos; /etc/ntp.conf
+sed -i &apos;s/pool 3.debian.pool.ntp.org iburst/server 4.north-america.pool.ntp.org/g&apos; /etc/ntp.conf
+
+## Re synchronisation du temps avec les bons parametres
+/etc/init.d/ntp stop
+ntpd -gq
+/etc/init.d/ntp start
+
+## Affichage du serveur utilise pour la synchro
+echo -e &quot;\e[31mTime synced with server below : \e[0m&quot;
+ntpq -p
+
+## Aide completion US 2
+echo -e &quot;\e[31mTo continue with the user story, run command to change time\e[0m&quot;
+echo &quot;sudo date --set 1998-11-02&quot;
+echo &quot;sudo /etc/init.d/ntp stop&quot;
+echo &quot;sudo ntpd -gq&quot;
+echo &quot;sudo /etc/init.d/ntp start&quot;</code></pre>
+<h4 id="remarques">Remarques</h4>
+<p>Le param&#xE8;tre iburst</p>
+<p>IBURST envoie une rafale de huit paquets lorsque le serveur est inaccessible (tente de savoir si un h&#xF4;te est joignable), puis raccourcit le temps jusqu&apos;&#xE0; la premi&#xE8;re synchronisation. Nous sp&#xE9;cifions le NTP IBURST pour une synchronisation d&apos;horloge plus rapide. Cette option est consid&#xE9;r&#xE9;e comme &#xAB;agressive&#xBB; par certains serveurs NTP publics. Si un serveur NTP ne r&#xE9;pond pas, le mode IBURST continue d&apos;envoyer des requ&#xEA;tes fr&#xE9;quentes jusqu&apos;&#xE0; ce que le serveur r&#xE9;ponde et que la synchronisation de l&apos;heure d&#xE9;marre.</p>
+<p>Nous n&apos;utiliserons donc pas le param&#xE8;tre iburst car nous utilisons un pool de serveurs ntp qui r&#xE9;pondront en cas de d&#xE9;faillance d&apos;un des serveurs du pool</p>
+<h2 id="story-3">Story 3</h2>
+<h3 id="instructions">Instructions</h3>
+<p><strong>Story 003 - Mettre en place un client NTP se connectant &#xE0; notre serveur source (Business Value : 5 / Dev effort : 3)</strong></p>
+<p>Description : l&apos;instance Domain Controler synchronise son temps avec l&apos;instance SSH</p>
+<p><strong>given</strong></p>
+<ul>
+<li>Je suis connect&#xE9; sur l&apos;instance Domain Controler.</li>
+<li>Je modifie l&apos;heure.</li>
+<li>Je d&#xE9;montre que les horloges sources sont bien celles mentionn&#xE9;es.</li>
+<li>Je montre le pare-feu activ&#xE9; et l&apos;exception qui a &#xE9;t&#xE9; ajout&#xE9;e pour permettre aux clients de synchroniser leur horloge.</li>
+</ul>
+<p><strong>when</strong></p>
+<ul>
+<li>Je lance (force) une synchronisation.</li>
+</ul>
+<p><strong>then</strong></p>
+<ul>
+<li>Le log du ntp mentionne les interactions avec les horloges sources.</li>
+<li>Le temps est &#xE0; nouveau synchronis&#xE9;.</li>
+<li>Je d&#xE9;montre que les horloges sources sont bien celles mentionn&#xE9;es.</li>
+<li>NTP est bien un service (persistence apr&#xE8;s un red&#xE9;marrage).</li>
+</ul>
+<h4 id="scripts">Scripts</h4>
+<p>Client CentOS 8</p>
+<pre><code class="language-text">#!/bin/bash
+## Titre : story2centosntp.sh
+## Description : Ce script installe et configure le client ntp vers un serveur specifie
+## Date : 27.11.2020
+## Auteurs : Chassot Richard, Karoui Mehdi, Angeloz Roderick
+## Teste sur : centos 8
+## Execute as root
+
+##Installation du daemon chronyd client ntp
+dnf install chronyd
+systemctl enable chronyd
+
+
+##Remplacement de la ligne de configuration indiquant le serveur ntp
+sed -i &apos;s/pool 2.centos.pool.ntp.org iburst/server 10.229.40.2/g&apos; /etc/chrony.conf
+systemctl restart chronyd
+
+sleep 2
+
+echo -e &quot;\e[31mNTP Server list : \e[0m&quot;
+chronyc sources</code></pre>
+<h2 id="story-4">Story 4</h2>
+<h3 id="instructions">Instructions</h3>
+<p><strong>Story 004 - S&#xE9;curiser son serveur NTP (Business Value : 5 / Dev Effort : 4)</strong></p>
+<p>Description : S&#xE9;curiser son serveur NTP</p>
+<p>La s&#xE9;curisation du serveur NTP passe en partie par la mise en place d&apos;un firewall logiciel qui bloque l&apos;acc&#xE8;s en entr&#xE9;e au serveur NTP sur le port 123 en UDP par des clients &#xE9;trangers au LAN:</p>
+<pre><code class="language-text">#!/bin/bash
+## Titre : firewallscript.sh
+## Description : Ce script installe et configure le firewall du serveur SSH
+## Date : 27.11.2020
+## Auteurs : Chassot Richard, Karoui Mehdi, Angeloz Roderick
+## Teste sur : debian 10
+## Execute as root
+
+apt install ufw -y
+
+## Modification  des regles relatives aux ICMP de maniere a ne plus y repondre
+sed -i &apos;/ufw-before-input.*icmp/s/ACCEPT/DROP/g&apos; /etc/ufw/before.rules
+
+## Configuration initiale pour autoriser le trafic sortant uniquement
+systemctl start ufw
+systemctl enable ufw
+ufw default allow outgoing
+ufw default deny incoming
+
+## Mise en place des exceptions SSH et NTP en entree et sortie car les clients
+## viendront se synchroniser dessus et nous aurons besoin d&apos;un tunnel SSH pour
+## atteindre les clients
+ufw allow ssh
+ufw allow proto udp from 10.229.32.0/20 to any port 123
+ufw --force enable</code></pre>
+<p>{% embed url=&quot;<a href="https://Redhat.com&quot;">https://Redhat.com&quot;</a> %}</p>
 </article></div><div style="background-color: #b4b2b2;width: 50px;height:50px;line-height: 50px;text-align: center;position: fixed;bottom: 10px;right: 10px;padding-top:5px;" onclick="document.documentElement.scrollTop = document.body.scrollTop =0;">
   <svg t="1533629773982" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1035" xlink="http://www.w3.org/1999/xlink" width="40" height="40"><defs><style type="text/css">@font-face { font-family: uc-nexus-iconfont; src: url("chrome-extension://pogijhnlcfmcppgimcaccdkmbedjkmhi/res/font_9qmmi8b8jsxxbt9.woff") format("woff"), url("chrome-extension://pogijhnlcfmcppgimcaccdkmbedjkmhi/res/font_9qmmi8b8jsxxbt9.ttf") format("truetype"); }
   </style></defs><path d="M536.255427 195.182354c-7.804756-7.804756-17.966187-11.615549-28.311813-11.615549-9.43693 0-18.874883 3.449565-26.496467 10.163477-2.360767 1.452071-4.356214 3.267417-6.352685 5.262864L218.47792 455.611735c-15.607466 15.60542-15.607466 40.834011 0 56.43943 15.607466 15.607466 41.558511 15.607466 57.167001 0l193.46013-192.733583 0 600.526219c0 22.1423 17.787108 39.927361 39.927361 39.927361 22.140253 0 39.927361-17.785062 39.927361-39.927361L548.959773 319.317583 737.15704 508.422522c15.607466 15.607466 40.469714 15.607466 56.078203 0 15.607466-15.607466 15.425318-40.834011-0.182149-56.441477L536.255427 195.182354 536.255427 195.182354z" p-id="1036" fill="#333"/><path d="M101.784174 143.097092l816.674071 0c22.140253 0 39.925315-17.785062 39.925315-39.927361 0-22.140253-17.784038-39.925315-39.925315-39.925315L101.784174 63.244416c-22.140253 0-39.927361 17.785062-39.927361 39.925315C61.856813 125.31203 79.643921 143.097092 101.784174 143.097092L101.784174 143.097092z" p-id="1037" fill="#333"/></svg>
