@@ -8,10 +8,10 @@
 
 **Story 001 - Acquisition de compétence théorique** \(Business Value : 3 / Dev effort : 2\)\*\*
 
-* [Wikipedia](https://fr.wikipedia.org/wiki/Network_Time_Protocol){target="_blank"}
-* [NTP.orp](http://support.ntp.org/bin/view/Main/WebHome){target="_blank"}
-* [Frameip.com](https://www.frameip.com/ntp/){target="_blank"}
-* [Serveurs sources](https://tf.nist.gov/tf-cgi/servers.cgi){target="_blank"}
+* <a href="https://fr.wikipedia.org/wiki/Network_Time_Protocol" target="_blank">Wikipedia</a>
+* <a href="http://support.ntp.org/bin/view/Main/WebHome" target="_blank">NTP.orp</a>
+* <a href="https://www.frameip.com/ntp/" target="_blank">Frameip.com</a>
+* <a href="https://tf.nist.gov/tf-cgi/servers.cgi" target="_blank">Serveurs sources</a>
 
 Voici les points qui doivent être étudié \(non exaustive\):
 
@@ -51,7 +51,7 @@ Chaque nœud de cette architecture doit être configuré en lui indiquant au min
 
 #### Source :
 
-[NTP en bref](http://www.ntp.org/ntpfaq/NTP-s-def.htm#AEN1298){target="_blank"}
+<a href="http://www.ntp.org/ntpfaq/NTP-s-def.htm#AEN1298" target="_blank">NTP en bref</a>
 
 #### Comment les serveurs NTP se protègent d'éventuelles attaques
 
@@ -79,7 +79,7 @@ Un autre effet peut être simplement le refus de communication des machines entr
 
 #### Source :
 
-[NTP en plus simple](https://en.wikipedia.org/wiki/Network_Time_Protocol#SNTP){target="_blank"}
+<a href="https://en.wikipedia.org/wiki/Network_Time_Protocol#SNTP" target="_blank">NTP en plus simple</a>
 
 ## Story 2
 

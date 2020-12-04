@@ -18,6 +18,13 @@ sed -i 's/pool 1.debian.pool.ntp.org iburst/server 2.north-america.pool.ntp.org/
 sed -i 's/pool 2.debian.pool.ntp.org iburst/server 3.north-america.pool.ntp.org/g' /etc/ntp.conf
 sed -i 's/pool 3.debian.pool.ntp.org iburst/server 4.north-america.pool.ntp.org/g' /etc/ntp.conf
 
+## Active l'enregistrement de statistiques ntp
+sed -i 's/#statsdir /var/log/ntpstats//statsdir /var/log/ntpstats//g' /etc/ntp.conf
+
+## Active l'enregistrement de log
+echo "## Active l'enregistrement de log" > /etc/ntp.conf
+echo "logfile /var/log/ntp.log" > /etc/ntp.conf
+
 ## Re synchronisation du temps avec les bons parametres
 /etc/init.d/ntp stop
 ntpd -gq
